@@ -1,7 +1,7 @@
 package one.digitalinnovation.lpp.service;
 
-import one.digitalinnovation.lpp.entity.Endereco;
+import one.digitalinnovation.lpp.controller.dto.EnderecoDTO;
 
 public interface ViaCepService {
-  Endereco cosultarCep(String cep);
+  EnderecoDTO cosultarCep(String cep);
 }

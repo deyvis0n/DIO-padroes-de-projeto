@@ -36,6 +36,14 @@ public class ApplicationExceptionHandler {
     return erroMap;
   }
 
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public Map<String, String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    Map<String, String> erroMap = new HashMap<>();
+    erroMap.put("errorMessage", "Verifique a formatação do Body da requesição");
+    return erroMap;
+  }
+
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(Exception.class)
   public Map<String, String> handleException(Exception ex) {

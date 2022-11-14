@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("clientes")
 public class ClienteController {
@@ -27,13 +29,13 @@ public class ClienteController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Cliente inserir(@RequestBody ClienteDTO cliente) {
+  public Cliente inserir(@Valid @RequestBody ClienteDTO cliente) {
     return clienteService.inserir(cliente);
   }
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public Cliente atualiza(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
+  public Cliente atualiza(@PathVariable Long id, @Valid @RequestBody ClienteDTO cliente) {
     return clienteService.atualizar(id, cliente);
   }
 

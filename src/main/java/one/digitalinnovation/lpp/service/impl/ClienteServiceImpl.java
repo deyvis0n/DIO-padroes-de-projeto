@@ -1,5 +1,6 @@
 package one.digitalinnovation.lpp.service.impl;
 
+import one.digitalinnovation.lpp.controller.dto.ClienteDTO;
 import one.digitalinnovation.lpp.entity.Cliente;
 import one.digitalinnovation.lpp.service.ClienteService;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,13 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public void inserir(Cliente cliente) {
-
+  public Cliente inserir(ClienteDTO cliente) {
+    return null;
   }
 
   @Override
-  public void atualizar(Long id, Cliente cliente) {
-
+  public Cliente atualizar(Long id, ClienteDTO cliente) {
+    return null;
   }
 
   @Override

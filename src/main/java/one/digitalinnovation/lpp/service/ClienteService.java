@@ -1,5 +1,6 @@
 package one.digitalinnovation.lpp.service;
 
+import one.digitalinnovation.lpp.controller.dto.ClienteDTO;
 import one.digitalinnovation.lpp.entity.Cliente;
 
 public interface ClienteService {
@@ -7,9 +8,9 @@ public interface ClienteService {
 
   Cliente buscarPorId(Long id);
 
-  void inserir(Cliente cliente);
+  Cliente inserir(ClienteDTO cliente);
 
-  void atualizar(Long id, Cliente cliente);
+  Cliente atualizar(Long id, ClienteDTO cliente);
 
   void deletar(Long id);
 }

@@ -1,5 +1,6 @@
 package one.digitalinnovation.lpp.controller;
 
+import one.digitalinnovation.lpp.controller.dto.ClienteDTO;
 import one.digitalinnovation.lpp.entity.Cliente;
 import one.digitalinnovation.lpp.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,14 @@ public class ClienteController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Cliente inserir(@RequestBody Cliente cliente) {
-    clienteService.inserir(cliente);
-    return cliente;
+  public Cliente inserir(@RequestBody ClienteDTO cliente) {
+    return clienteService.inserir(cliente);
   }
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public Cliente atualiza(@PathVariable Long id, @RequestBody Cliente cliente) {
-    clienteService.atualizar(id, cliente);
-    return cliente;
+  public Cliente atualiza(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
+    return clienteService.atualizar(id, cliente);
   }
 
   @DeleteMapping("/{id}")

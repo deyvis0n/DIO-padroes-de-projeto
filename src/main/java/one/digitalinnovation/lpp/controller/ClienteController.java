@@ -2,6 +2,7 @@ package one.digitalinnovation.lpp.controller;
 
 import one.digitalinnovation.lpp.controller.dto.ClienteDTO;
 import one.digitalinnovation.lpp.entity.Cliente;
+import one.digitalinnovation.lpp.exception.ClienteNotFoundException;
 import one.digitalinnovation.lpp.exception.NotFoundCepExeption;
 import one.digitalinnovation.lpp.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ClienteController {
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public Cliente atualiza(@PathVariable Long id, @Valid @RequestBody ClienteDTO cliente) {
+  public Cliente atualiza(@PathVariable Long id, @Valid @RequestBody ClienteDTO cliente) throws NotFoundCepExeption, ClienteNotFoundException {
     return clienteService.atualizar(id, cliente);
   }
 

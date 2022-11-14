@@ -4,6 +4,7 @@ import one.digitalinnovation.lpp.controller.dto.ClienteDTO;
 import one.digitalinnovation.lpp.controller.dto.EnderecoViaCepDTO;
 import one.digitalinnovation.lpp.entity.Cliente;
 import one.digitalinnovation.lpp.entity.Endereco;
+import one.digitalinnovation.lpp.exception.ClienteNotFoundException;
 import one.digitalinnovation.lpp.exception.NotFoundCepExeption;
 import one.digitalinnovation.lpp.repository.ClienteRepository;
 import one.digitalinnovation.lpp.repository.EnderecoRepository;
@@ -40,11 +41,11 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public Cliente atualizar(Long id, ClienteDTO cliente) {
-    String cep = cliente.getEndereco().getCep();
-
-
-    return null;
+  public Cliente atualizar(Long id, ClienteDTO cliente) throws NotFoundCepExeption, ClienteNotFoundException {
+    if (!clienteRepository.existsById(id)) throw new ClienteNotFoundException(id);
+    Cliente clienteParaAtualizar = verificarCEPeRetornarCliente(cliente);
+    clienteParaAtualizar.setId(id);
+    return clienteRepository.save(clienteParaAtualizar);
   }
 
   @Override

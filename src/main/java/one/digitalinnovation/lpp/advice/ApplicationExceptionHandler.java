@@ -1,7 +1,9 @@
 package one.digitalinnovation.lpp.advice;
 
+import one.digitalinnovation.lpp.exception.ClienteNotFoundException;
 import one.digitalinnovation.lpp.exception.NotFoundCepExeption;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,8 +16,11 @@ import java.util.Map;
 public class ApplicationExceptionHandler {
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler(NotFoundCepExeption.class)
-  public Map<String, String> handleNotFoundCepExeption(NotFoundCepExeption ex) {
+  @ExceptionHandler({
+      NotFoundCepExeption.class,
+      ClienteNotFoundException.class
+  })
+  public Map<String, String> handleCustomExeption(Exception ex) {
     Map<String, String> erroMap = new HashMap<>();
     erroMap.put("errorMessage", ex.getMessage());
     return erroMap;

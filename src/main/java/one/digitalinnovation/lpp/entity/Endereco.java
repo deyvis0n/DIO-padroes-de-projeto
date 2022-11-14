@@ -21,7 +21,6 @@ public class Endereco {
   private String logradouro;
   private String complemento;
   private String bairro;
-  private String numero;
   private String localidade;
   @Length(max = 2)
   private String uf;

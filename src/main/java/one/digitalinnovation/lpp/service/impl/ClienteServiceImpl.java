@@ -65,7 +65,6 @@ public class ClienteServiceImpl implements ClienteService {
               .logradouro(enderecoViaCep.getLogradouro())
               .complemento(enderecoViaCep.getComplemento())
               .bairro(enderecoViaCep.getBairro())
-              .numero(cliente.getEndereco().getNumero())
               .localidade(enderecoViaCep.getLocalidade())
               .uf(enderecoViaCep.getUf())
               .build();

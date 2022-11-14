@@ -23,8 +23,6 @@ public class EnderecoDTO {
   @Size(max = 255)
   private String bairro;
   @Size(max = 255)
-  private String numero;
-  @Size(max = 255)
   private String localidade;
   @Size(max = 2)
   private String uf;

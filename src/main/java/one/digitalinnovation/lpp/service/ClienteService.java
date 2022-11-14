@@ -8,7 +8,7 @@ import one.digitalinnovation.lpp.exception.NotFoundCepExeption;
 public interface ClienteService {
   Iterable<Cliente> buscarTodos();
 
-  Cliente buscarPorId(Long id);
+  Cliente buscarPorId(Long id) throws ClienteNotFoundException;
 
   Cliente inserir(ClienteDTO cliente) throws NotFoundCepExeption;
 

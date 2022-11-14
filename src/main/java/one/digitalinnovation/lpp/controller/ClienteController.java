@@ -25,7 +25,7 @@ public class ClienteController {
 
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public Cliente buscarPorId(@PathVariable Long id) {
+  public Cliente buscarPorId(@PathVariable Long id) throws ClienteNotFoundException {
     return clienteService.buscarPorId(id);
   }
 

@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteServiceImpl implements ClienteService {
   @Autowired
-  ViaCepService viaCepService;
+  private ViaCepService viaCepService;
 
   @Autowired
-  ClienteRepository clienteRepository;
+  private ClienteRepository clienteRepository;
 
   @Autowired
-  EnderecoRepository enderecoRepository;
+  private EnderecoRepository enderecoRepository;
 
   @Override
   public Iterable<Cliente> buscarTodos() {
@@ -37,16 +37,13 @@ public class ClienteServiceImpl implements ClienteService {
 
   @Override
   public Cliente inserir(ClienteDTO cliente) throws NotFoundCepExeption {
-    Cliente clienteParaSalvar = verificarCEPeRetornarCliente(cliente);
-    return clienteRepository.save(clienteParaSalvar);
+    return salvarClienteComCep(cliente, null);
   }
 
   @Override
   public Cliente atualizar(Long id, ClienteDTO cliente) throws NotFoundCepExeption, ClienteNotFoundException {
     if (!clienteRepository.existsById(id)) throw new ClienteNotFoundException(id);
-    Cliente clienteParaAtualizar = verificarCEPeRetornarCliente(cliente);
-    clienteParaAtualizar.setId(id);
-    return clienteRepository.save(clienteParaAtualizar);
+    return salvarClienteComCep(cliente, id);
   }
 
   @Override
@@ -58,26 +55,28 @@ public class ClienteServiceImpl implements ClienteService {
     }
   }
 
-  private Cliente verificarCEPeRetornarCliente(ClienteDTO cliente) throws NotFoundCepExeption {
+  private Cliente salvarClienteComCep(ClienteDTO cliente, Long id) throws NotFoundCepExeption {
     String cep = cliente.getEndereco().getCep();
     Endereco enderecoParaSalvar = enderecoRepository.findById(cep).orElseGet(() -> {
       EnderecoViaCepDTO enderecoViaCep = viaCepService.cosultarCep(cep);
       if (enderecoViaCep.getCep() == null) return null;
       Endereco endereco = Endereco.builder()
-          .cep(enderecoViaCep.getCep())
-          .logradouro(enderecoViaCep.getLogradouro())
-          .complemento(enderecoViaCep.getComplemento())
-          .bairro(enderecoViaCep.getBairro())
-          .numero(cliente.getEndereco().getNumero())
-          .localidade(enderecoViaCep.getLocalidade())
-          .uf(enderecoViaCep.getUf())
-          .build();
+              .cep(enderecoViaCep.getCep())
+              .logradouro(enderecoViaCep.getLogradouro())
+              .complemento(enderecoViaCep.getComplemento())
+              .bairro(enderecoViaCep.getBairro())
+              .numero(cliente.getEndereco().getNumero())
+              .localidade(enderecoViaCep.getLocalidade())
+              .uf(enderecoViaCep.getUf())
+              .build();
       return enderecoRepository.save(endereco);
     });
     if (enderecoParaSalvar == null) throw new NotFoundCepExeption(cep);
-    return Cliente.builder()
-        .nome(cliente.getNome())
-        .endereco(enderecoParaSalvar)
-        .build();
+    Cliente clienteParaSalvar = Cliente.builder()
+            .id(id)
+            .nome(cliente.getNome())
+            .endereco(enderecoParaSalvar)
+            .build();
+    return clienteRepository.save(clienteParaSalvar);
   }
 }

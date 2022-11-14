@@ -35,8 +35,25 @@ public class ClienteServiceImpl implements ClienteService {
 
   @Override
   public Cliente inserir(ClienteDTO cliente) throws NotFoundCepExeption {
+    Cliente clienteParaSalvar = verificarCEPeRetornarCliente(cliente);
+    return clienteRepository.save(clienteParaSalvar);
+  }
+
+  @Override
+  public Cliente atualizar(Long id, ClienteDTO cliente) {
     String cep = cliente.getEndereco().getCep();
 
+
+    return null;
+  }
+
+  @Override
+  public void deletar(Long id) {
+
+  }
+
+  private Cliente verificarCEPeRetornarCliente(ClienteDTO cliente) throws NotFoundCepExeption {
+    String cep = cliente.getEndereco().getCep();
     Endereco enderecoParaSalvar = enderecoRepository.findById(cep).orElseGet(() -> {
       EnderecoViaCepDTO enderecoViaCep = viaCepService.cosultarCep(cep);
       if (enderecoViaCep.getCep() == null) return null;
@@ -52,20 +69,9 @@ public class ClienteServiceImpl implements ClienteService {
       return enderecoRepository.save(endereco);
     });
     if (enderecoParaSalvar == null) throw new NotFoundCepExeption(cep);
-    Cliente clienteParaSalvar = Cliente.builder()
+    return Cliente.builder()
         .nome(cliente.getNome())
         .endereco(enderecoParaSalvar)
         .build();
-    return clienteRepository.save(clienteParaSalvar);
-  }
-
-  @Override
-  public Cliente atualizar(Long id, ClienteDTO cliente) {
-    return null;
-  }
-
-  @Override
-  public void deletar(Long id) {
-
   }
 }

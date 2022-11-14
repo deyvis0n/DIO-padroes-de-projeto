@@ -1,5 +1,6 @@
 package one.digitalinnovation.lpp.advice;
 
+import one.digitalinnovation.lpp.exception.NotFoundCepExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,6 +12,14 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
+
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(NotFoundCepExeption.class)
+  public Map<String, String> handleNotFoundCepExeption(NotFoundCepExeption ex) {
+    Map<String, String> erroMap = new HashMap<>();
+    erroMap.put("errorMessage", ex.getMessage());
+    return erroMap;
+  }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentNotValidException.class)

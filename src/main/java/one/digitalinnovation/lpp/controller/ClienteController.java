@@ -2,6 +2,7 @@ package one.digitalinnovation.lpp.controller;
 
 import one.digitalinnovation.lpp.controller.dto.ClienteDTO;
 import one.digitalinnovation.lpp.entity.Cliente;
+import one.digitalinnovation.lpp.exception.NotFoundCepExeption;
 import one.digitalinnovation.lpp.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class ClienteController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Cliente inserir(@Valid @RequestBody ClienteDTO cliente) {
+  public Cliente inserir(@Valid @RequestBody ClienteDTO cliente) throws NotFoundCepExeption {
     return clienteService.inserir(cliente);
   }
 

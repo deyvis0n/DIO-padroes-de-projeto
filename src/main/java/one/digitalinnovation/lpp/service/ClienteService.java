@@ -14,5 +14,5 @@ public interface ClienteService {
 
   Cliente atualizar(Long id, ClienteDTO cliente) throws NotFoundCepExeption, ClienteNotFoundException;
 
-  void deletar(Long id);
+  void deletar(Long id) throws ClienteNotFoundException;
 }

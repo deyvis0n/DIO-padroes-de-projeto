@@ -43,7 +43,7 @@ public class ClienteController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public void deletar(@PathVariable Long id) {
+  public void deletar(@PathVariable Long id) throws ClienteNotFoundException {
     clienteService.deletar(id);
   }
 }

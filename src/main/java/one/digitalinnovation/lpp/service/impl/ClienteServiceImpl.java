@@ -11,6 +11,7 @@ import one.digitalinnovation.lpp.repository.EnderecoRepository;
 import one.digitalinnovation.lpp.service.ClienteService;
 import one.digitalinnovation.lpp.service.ViaCepService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,8 +50,12 @@ public class ClienteServiceImpl implements ClienteService {
   }
 
   @Override
-  public void deletar(Long id) {
-
+  public void deletar(Long id) throws ClienteNotFoundException {
+    try {
+      clienteRepository.deleteById(id);
+    } catch (EmptyResultDataAccessException ex) {
+      throw new ClienteNotFoundException(id);
+    }
   }
 
   private Cliente verificarCEPeRetornarCliente(ClienteDTO cliente) throws NotFoundCepExeption {
